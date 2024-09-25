@@ -1,0 +1,7 @@
+.vscode/
+build/
+.build
+*.pdf
+*.doc
+*.docx
+settings.txt
