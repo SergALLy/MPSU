@@ -1,4 +1,5 @@
 .vscode/
+build/
 *.pdf
 *.doc
 *.docx
