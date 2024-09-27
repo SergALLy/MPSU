@@ -48,10 +48,10 @@ void show (int16_t number)
         {
             if (number<0)
             {
-                PORTA |= (1<<znach_digit-1);
+                PORTA |= (1<<(znach_digit-1));
                 PORTC = 0x40;
                 _delay_ms(1);
-                PORTA &= ~(1<<znach_digit-1);
+                PORTA &= ~(1<<(znach_digit-1));
             }
             PORTC = segments[digit(abs(number), i)];
         }
