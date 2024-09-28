@@ -1,12 +1,10 @@
 # Папки
 .vscode/
-block diagram/
 build/
 # Все файлы удовлетровяющие этим шаблонам
 *.pdf
 *.doc
 *.docx
-*.jpg
-*.png
+*.json
 # Определённые файлы
 settings.txt
