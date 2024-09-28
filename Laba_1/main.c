@@ -2,6 +2,7 @@
 #include <util/delay.h>
 
 int16_t angle=0;
+// Кодировка цифр на семисегментном индикаторе
 const uint8_t segments[] = {0x3F, 0x06, 0x5B, 0x4F,0x66, 0x6D,0x7D, 0x07, 0x7F, 0x6F};
 
 uint8_t digit (int16_t d, int8_t m) 
@@ -24,8 +25,16 @@ uint8_t digit (int16_t d, int8_t m)
 }
 uint8_t null_delete (int16_t d)
 {
+//[]-------------------------------------------------[]
+//| Назначение: Поиск первой значащей цифры|
+//| десятичного числа |
+//| Входные параметры: |
+//| d - целое десятичное число |
+//| Возвращается номер индикатора, |
+//| с которого начинается число d |
+//[]-------------------------------------------------[]
     uint16_t a=10000;
-    uint8_t i=1;
+    uint8_t i=1; // Номер индикатора
     while (d/a == 0)
     {
         i++;
@@ -33,23 +42,24 @@ uint8_t null_delete (int16_t d)
     }
     return (i);
 }
-
-ISR(INT0_vect)
+// Функции-обработчики прерывания
+ISR(INT0_vect) // Энкодер
 {
     if((PIND & (1 << 0)) != 0) {
-        EICRA = (1<<ISC01) | (1<<ISC21);
+        EICRA = (1<<ISC01) | (1<<ISC21); // Падающий срез на INT0
         if((PIND & (1 << 1)) != 0) angle++;
         else angle--;
     }
     else {
-        EICRA = (1 << ISC01) | (1<<ISC00)| (1<<ISC21);
+        EICRA = (1 << ISC01) | (1<<ISC00)| (1<<ISC21); // Нарастающий фронт на INT0
         if((PIND & (1 << 1)) != 0) angle--;
         else angle++;
     }
 }
 
-ISR(INT2_vect)
+ISR(INT2_vect) // Кнопка
 {
+// Сброс значения угла
     angle = 0;
 }
 
@@ -58,31 +68,34 @@ int main ()
     int16_t angle_s=0;
     DDRA |= 0x3E;
     DDRC = 0x7F;
-    EICRA |= (1<<ISC00) | (1<<ISC01) | (1<<ISC21); // Нарастающий фронт на INT0 на INT2
+    // Нарастающий фронт на INT0 и Падающий срез на INT2
+    EICRA |= (1<<ISC00) | (1<<ISC01) | (1<<ISC21); 
     EIMSK |= (1<<INT0) | (1<<INT2); // Разрешить прерывание от INT0 и INT2
-    sei() ;// разрешить глобально прерывание
+    sei() ;// Разрешить глобально прерывание
     while (1)
     {
-        angle_s=angle*9;
-        uint8_t znach_digit=null_delete(abs(angle_s));
+        angle_s=angle*9; // Перерасчёт в градусы
+        uint8_t znach_digit=null_delete(abs(angle_s)); 
+        // Цикл по индикаторам
         for (uint8_t i=1; i<6; i++)
         {
-            PORTA |= (1<<i);
-            if (i<znach_digit) PORTC=0;
+            PORTA |= (1<<i); // Открыть защёлку 
+            if (i<znach_digit) PORTC=0; // Если знач цифры нет, ничего не выводим
             else 
             {
-                if (angle_s<0)
+                if (angle_s<0) // Проверка на отрицательное число
                 {
-                    PORTA |= (1<<znach_digit-1);
+                    // Вывод знака "минус" на индикатор
+                    PORTA |= (1<<(znach_digit-1));
                     PORTC = 0x40;
                     _delay_ms(1);
-                    PORTA &= ~(1<<znach_digit-1);
+                    PORTA &= ~(1<<(znach_digit-1));
                 }
+                // Вывод цифры на i индикатор
                 PORTC = segments[digit(abs(angle_s), i)];
             }
             _delay_ms(1);
-            PORTA &= ~(1<<i);
+            PORTA &= ~(1<<i); // Закрыть защёлку
         }
-
     }
 };
