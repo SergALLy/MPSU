@@ -6,9 +6,6 @@ build/
 *.doc
 *.docx
 *.json
-<<<<<<< HEAD
 *.rar
-=======
->>>>>>> f86b03cc2c8e69244a5aed283be13131f4fc71ce
 # Определённые файлы
 settings.txt
