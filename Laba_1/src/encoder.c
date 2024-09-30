@@ -1,29 +1,30 @@
 #include "../inc/encoder.h"
 
-extern int16_t angle;
+extern int16_t angle; // Значение угла поворота
 
-void init_encoder ()
+void init_encoder () // Инициализация энкодера и кнопки
 {
-    EICRA |= SETTINGS;
+    EICRA |= SETTINGS; // Настройка прерываний для энкодера и кнопки
     EIMSK |= (1<<INT0) | (1<<INT2); // Разрешить прерывание от INT0 и INT2
-    sei();// разрешить глобально прерывание
+    sei();// Разрешить глобально прерывание
 }
 
-ISR(INT0_vect)
+ISR(INT0_vect) // Энкодер
 {
-    if((PIND & (1 << 0)) != 0) {
-        EICRA = (1<<ISC01) | (1<<ISC21);
-        if((PIND & (1 << 1)) != 0) angle++;
+    if((PIND & (1 << 0)) != 0) {  // Если прерывание по фронту
+        EICRA = (1<<ISC01) | (1<<ISC21); // Переключаем прерывание на срез
+        if((PIND & (1 << 1)) != 0) angle++; // Проверка направления вращения
         else angle--;
     }
-    else {
-        EICRA = (1 << ISC01) | (1<<ISC00)| (1<<ISC21);
-        if((PIND & (1 << 1)) != 0) angle--;
+    else { // Если прерывание по срезу
+        EICRA = (1 << ISC01) | (1<<ISC00)| (1<<ISC21); // Переключаем на фронт
+        if((PIND & (1 << 1)) != 0) angle--; // Проверка направления вращения
         else angle++;
     }
 }
 
-ISR(INT2_vect)
+ISR(INT2_vect) // Кнопка
 {
-    angle = 0;
+    // Сброс угола поворота
+    angle = 0; // Сброс угола поворота
 }
