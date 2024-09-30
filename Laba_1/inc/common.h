@@ -6,5 +6,6 @@
 #include <avr/interrupt.h>
 #include "encoder.h"
 #include "sem_ind.h"
+#include <stdlib.h>
 
 #endif
