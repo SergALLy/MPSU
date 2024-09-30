@@ -14,6 +14,7 @@
 
 //FUNCTION
 void LCD_cmd(uint8_t cmd); // Запись кодов в регистр команд ЖКИ
+void LCD_data(uint8_t data); // Вывод символа на ЖКИ
 void LCD_init(void); // Инициализация ЖКИ
 void int_to_char (int8_t a); // Вывод на экран трёхзначного числа
 void vyvod (char *str); // Вывод на экран строки

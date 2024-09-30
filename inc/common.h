@@ -10,5 +10,6 @@
 #include "encoder.h" // Работа с энкодером и кнопкой
 #include "sem_ind.h" // Работа с матрицей семисегментных индикаторов
 #include "lcd.h" // Работа с ЖКИ
+#include "keyboard.h" // Работа с клавиатурой
 
 #endif
