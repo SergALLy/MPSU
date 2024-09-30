@@ -1,7 +1,4 @@
-#include <avr/interrupt.h>
-#include <util/delay.h>
-#include "../INC/sem_ind.h"
-#include "../INC/encoder.h"
+#include "inc/common.h"
 
 int16_t angle=0;
 
