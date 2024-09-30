@@ -1,5 +1,5 @@
-#ifndef COMMON_H_
-#define COMMON_H_
+#ifndef __COMMON_H__
+#define __COMMON_H__
 
 // Общие библиотеки
 #include <avr/io.h>
