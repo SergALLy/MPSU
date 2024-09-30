@@ -3,4 +3,6 @@ build/
 *.pdf
 *.doc
 *.docx
+*.json
+*.rar
 settings.txt
