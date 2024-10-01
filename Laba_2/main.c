@@ -11,6 +11,7 @@ int main()
     сброс при совпадении*/
     TCCR3A = (1<<COM3A1)|(1<<COM3B1)|(1<<COM3C1)|(1<<WGM30);
     TCCR3B = (1<<WGM32) | (1<<CS31);
+    // Установка сравниваемого значения
     OCR3AH = 0;
     OCR3AL = 0;
     OCR3BH = 0;
@@ -18,7 +19,8 @@ int main()
     OCR3CH = 0;
     OCR3CL = 255;
 
-    LCD_init;
+    init_encoder(); // Инициализация энкодера
+    LCD_init(); // Инициализация ЖКИ дисплея
 
     while(1)
     {
@@ -30,13 +32,13 @@ int main()
         OCR3BL = 255-angle; // Зелёный
         OCR3CL = angle; // Красный
         // Вывод на экран
-        LCD_vyvod('R: ');
+        LCD_vyvod("R: ");
         LCD_number(angle);
-        LCD_vyvod(' G: ');
+        LCD_vyvod(" G: ");
         LCD_number(255-angle);
-        LCD_vyvod(' B: ');
+        LCD_vyvod(" B: ");
         LCD_number(255-angle);
-        LCD_data(1<<ADDRES|0);     
+        LCD_data(ADDRES|0); // Передвинуть курсор на 0 место 
         _delay_ms(1);
     }
 }
