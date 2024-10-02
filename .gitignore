@@ -7,5 +7,7 @@ build/
 *.docx
 *.json
 *.rar
+*.zip
+*.png
 # Определённые файлы
 settings.txt
