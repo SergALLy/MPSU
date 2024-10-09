@@ -1,4 +1,6 @@
-#include "../inc/adc.h"
+#include <avr/io.h>
+#include <util/delay.h> //для использования пауз
+#include <avr/interrupt.h>
 
 void init_ADC(uint8_t num, uint8_t arg, ...)
 {

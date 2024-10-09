@@ -6,7 +6,7 @@ int main()
 {
     init_ADC(1,ADEN);
     init_encoder();
-    servo_init();
+    init_servo();
     
     uint16_t value=MIN_POS;
 
@@ -17,7 +17,7 @@ int main()
         if (angle>MAX_POS) angle=MAX_POS;
         if (value<MIN_POS) value=MIN_POS;
         if (value>MAX_POS) value=MAX_POS;
-        round_1(angle);
-        round_2(value);
+        servo_1_turn(angle*10);
+        servo_2_turn(convert(value));
     }
 }
