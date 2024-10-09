@@ -19,7 +19,10 @@ void init_rgb_led() // Инициализация RGB-светодиода и т
 void color_rgb_led(uint16_t red, uint16_t green, uint16_t blue) // Изменение регистра OCR3NL 
 {
         // Установка яркости каждого из цветов
+        OCR3AH = blue>>8; // Синий
         OCR3AL = blue; // Синий
+        OCR3AH = green>>8; // Зелёный
         OCR3BL = green; // Зелёный
+        OCR3AH = red>>8; // Красный
         OCR3CL = red; // Красный
 }

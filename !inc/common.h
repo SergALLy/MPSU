@@ -12,5 +12,7 @@
 #include "lcd.h" // Работа с ЖКИ
 #include "keyboard.h" // Работа с клавиатурой
 #include "rgb_led.h" // Работа с RGB-светодиодом
+#include "adc.h" // Работа с АЦП
+#include "servo.h" // Работа с сервоприводами
 
 #endif
