@@ -34,6 +34,6 @@ int main()
         LCD_cmd(ADDRES|67);
         LCD_number(255-angle);
 
-        _delay_us(500);
+        _delay_us(10);
     }
 }

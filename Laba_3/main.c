@@ -23,7 +23,7 @@ int main()
     while(1)
     {
         value = read_adc(3); // Прочитать значение с АЦП
-        color_rgb_led(1023-value, 0, value);
+        color_rgb_led(1023-value, value,0);
         _delay_ms(1);
     }
 }
