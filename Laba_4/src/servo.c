@@ -11,15 +11,15 @@ void init_servo()
 
 void servo_1_turn(uint16_t *angle_servo)
 {
-    if (angle_servo<MIN_POS) angle_servo=MIN_POS;
-    if (angle_servo>MAX_POS) angle_servo=MAX_POS;
+    if (*angle_servo<MIN_POS) *angle_servo=MIN_POS;
+    if (*angle_servo>MAX_POS) *angle_servo=MAX_POS;
     OCR1A = angle_servo;
 }
 
 void servo_2_turn(uint16_t *angle_servo)
 {
-    if (angle_servo<MIN_POS) angle_servo=MIN_POS;
-    if (angle_servo>MAX_POS) angle_servo=MAX_POS;
+    if (*angle_servo<MIN_POS) *angle_servo=MIN_POS;
+    if (*angle_servo>MAX_POS) *angle_servo=MAX_POS;
     OCR1B = angle_servo;
 }
 
