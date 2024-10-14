@@ -10,7 +10,7 @@ int main()
     while(1)
     {
         value = read_adc_10(3); // Прочитать значение с АЦП
-        color_rgb_led(1023-value, value,0);
+        color_rgb_led(1023-value, value,0); 
         _delay_ms(1);
     }
 }

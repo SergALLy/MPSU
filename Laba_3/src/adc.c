@@ -8,9 +8,6 @@ void init_ADC(uint8_t num, uint8_t arg, ...)
     uint8_t *p = &arg;
     while (num--)
     {
-        /* code */
-    
-    
         ADCSRA |= (1<<*p);
         p++;
     }

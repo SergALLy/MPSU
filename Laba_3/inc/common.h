@@ -7,6 +7,6 @@
 
 // Пользовательские библиотеки
 #include "rgb_led.h" // Работа с RGB-светодиодом
-#include "adc.h"
+#include "adc.h" // Работа с АЦП
 
 #endif
