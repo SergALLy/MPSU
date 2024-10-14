@@ -15,7 +15,7 @@
 
 //FUNCTION
 void init_rgb_led(); // Инициализация RGB-светодиода и таймера
-void color_rgb_led(uint16_t red, uint16_t green, uint16_t blue); // Изменение регистра OCR3NL 
+void color_rgb_led(uint16_t red, uint16_t green, uint16_t blue); // Изменение регистра OCR3nL и OCR3nH
 //-------------------------------------------------------
 
 #endif
