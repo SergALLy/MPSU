@@ -8,6 +8,6 @@ build/
 *.json
 *.rar
 *.zip
-*.png
 # Определённые файлы
 settings.txt
+Подпись.png
