@@ -10,9 +10,9 @@
 //INCLUDE
 #include "common.h"
 //-------------------------------------------------------
-
 //DEFINE
-#define SETTING_ENCODER (1<<ISC00) | (1<<ISC01) | (1<<ISC21) // Нарастающий фронт на INT0 на INT2
+#define INTERRUPT_ENCODER EICRA |= (1<<ISC00) | (1<<ISC01) | (1<<ISC21) // Нарастающий фронт на INT0 на INT2
+#define ALLOW_INTERRUPT_ENCODER EIMSK |= (1<<INT0) | (1<<INT2) // Разрешить прерывание от INT0 и INT2
 //-------------------------------------------------------
 
 //FUNCTION
