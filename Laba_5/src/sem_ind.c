@@ -10,7 +10,7 @@ int16_t my_abs (int16_t a) // Поиск модуля
 void init_sem_ind () // Инициализация семисегментного индикатора
 {
     DDRA |= 0x3E;
-    DDRC = 0x7F;
+    DDRC = 0xFF;
 }
 
 uint8_t digit (int16_t d, int8_t m) // Поиск цифры 

@@ -1,6 +1,6 @@
 #include "inc/common.h"
 
-uint16_t angle=MIN_POS;
+uint16_t angle=0;
 
 int main()
 {
@@ -13,11 +13,7 @@ int main()
     while(1)
     {
         value = read_adc_10(3);
-        if (angle<MIN_POS) angle=MIN_POS;
-        if (angle>MAX_POS) angle=MAX_POS;
-        if (value<MIN_POS) value=MIN_POS;
-        if (value>MAX_POS) value=MAX_POS;
-        uint16_t a=angle*10;
+        uint16_t a=angle*10+MIN_POS;
         servo_1_turn(&a);
         servo_2_turn(convert(&value));
     }
