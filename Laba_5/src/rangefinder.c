@@ -10,8 +10,7 @@ void init_rangefinder()
     EIMSK |= (1<<ECHO); // Разрешить локально прерывание на INT7
     sei(); // Разрешить прерывание глобально
     // Настройка таймера 1
-    RANGEFINDER_SETTING_A;
-    RANGEFINDER_SETTING_B;
+    RANGEFINDER_SETTING_TIMER;
     // Настройка ног
     DDRE |= (1<<TRIG);
 }

@@ -17,8 +17,7 @@
     Нормальный режим, OCR1N отключён,
     преддедитель на 256
 */
-#define RANGEFINDER_SETTING_A TCCR3A=TCCR3A
-#define RANGEFINDER_SETTING_B TCCR1B = (1<<CS12);
+#define RANGEFINDER_SETTING_TIMER TCCR1B = (1<<CS12)
 
 //-------------------------------------------------------
 
