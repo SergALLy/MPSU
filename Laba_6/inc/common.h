@@ -4,9 +4,9 @@
 // Общие библиотеки
 #include <avr/io.h>
 #include <util/delay.h>
+//#include <avr/interrupt.h>
 
 // Пользовательские библиотеки
-#include "rgb_led.h" // Работа с RGB-светодиодом
-#include "adc.h" // Работа с АЦП
+#include "twi.h"" 
 
 #endif

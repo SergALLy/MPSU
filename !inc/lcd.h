@@ -14,11 +14,11 @@
 //-------------------------------------------------------
 
 //FUNCTION
-void LCD_cmd(uint8_t cmd); // Запись кодов в регистр команд ЖКИ
-void LCD_data(uint8_t data); // Вывод символа на ЖКИ
-void LCD_init(void); // Инициализация ЖКИ
-void LCD_number (int16_t a); // Вывод на экран трёхзначного числа
-void LCD_vyvod (char *str); // Вывод на экран строки
+void lcd_cmd(uint8_t cmd); // Запись кодов в регистр команд ЖКИ
+void lcd_data(uint8_t data); // Вывод символа на ЖКИ
+void init_lcd(void); // Инициализация ЖКИ
+void lcd_number (int16_t a); // Вывод на экран трёхзначного числа
+void lcd_vyvod (char *str); // Вывод на экран строки
 //-------------------------------------------------------
 
 #endif

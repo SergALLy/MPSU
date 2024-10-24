@@ -1,6 +1,4 @@
-#include <avr/io.h>
-#include <util/delay.h> //для использования пауз
-#include <avr/interrupt.h>
+#include "../inc/adc.h"
 
 void init_ADC(uint8_t num, uint8_t arg, ...)
 {
@@ -8,9 +6,6 @@ void init_ADC(uint8_t num, uint8_t arg, ...)
     uint8_t *p = &arg;
     while (num--)
     {
-        /* code */
-    
-    
         ADCSRA |= (1<<*p);
         p++;
     }
