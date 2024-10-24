@@ -12,9 +12,9 @@ int main()
 
     while(1)
     {
-        value = read_adc_10(3);
+        value = convert(read_adc_10(3));
         uint16_t a=angle*10+MIN_POS;
         servo_1_turn(&a);
-        servo_2_turn(convert(&value));
+        servo_2_turn(&value);
     }
 }
