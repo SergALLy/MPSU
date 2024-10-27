@@ -13,7 +13,7 @@ void init_ADC(uint8_t num, uint8_t arg, ...)
 
 uint16_t read_adc_10(uint8_t channel)
 {
-    // AVCC + левое выравнивание + выбор канала
+    // AVCC + выбор канала
     ADMUX = (1 << REFS0) | channel;
     ADCSRA |= (1 << ADSC); // Начало преобразования
     // Ждем окончания преобразования АЦП
@@ -21,22 +21,19 @@ uint16_t read_adc_10(uint8_t channel)
         ;
     // Сброс флага завершения преобразования
     ADCSRA |= (1 << ADIF);
-    //uint8_t low = ADCL;
     uint16_t my_acp =ADCL| (ADCH<<8);
-    return (my_acp); // возвращаем старшие 8 бит результата
+    return (my_acp); // возвращаем результат преобразования
 }
 
 uint8_t read_adc_8_H(uint8_t channel)
 {
     // AVCC + левое выравнивание + выбор канала
-    ADMUX = (1 << REFS0) | channel;
+    ADMUX = (1 << REFS0)| (1<<ADLAR) | channel;
     ADCSRA |= (1 << ADSC); // Начало преобразования
     // Ждем окончания преобразования АЦП
     while (!(ADCSRA & (1 << ADIF)))
         ;
     // Сброс флага завершения преобразования
-    ADCSRA |= (1 << ADIF);
-    //uint8_t low = ADCL;
-    
+    ADCSRA |= (1 << ADIF);    
     return (ADCH); // возвращаем старшие 8 бит результата
 }
