@@ -1,4 +1,4 @@
-include "inc/common.h"
+#include "inc\\common.h"
 
 #define DEV_ADDR 0b1100000 // адрес модуля по умолчанию 
 #define W 0 // признак записи данных в матрицу
@@ -9,16 +9,33 @@ include "inc/common.h"
 
 void twiStart();
 void twiStop();
-void twiWrite(uint8_tdata);
-void matrDrawPict(uint8_tdevAddr, uint8_t *dataBuf);
-void matrInit(uint8_tdevAddr);
+void twiWrite(uint8_t data);
+void matrDrawPict(uint8_t devAddr, uint8_t *dataBuf);
+void matrInit(uint8_t devAddr);
 
 int main(void)
 {
-    uint8_t pict[] = {0b00111100, 0b01000010, 0b10011001, 0b10100001, 0b10100001, 0b10011001, 0b01000010, 0b00111100};//рисунок–значок копирайта © 
+    uint8_t pict[][8] = { // рисунок–значок копирайта © 
+        {0b00111100, 0b01000010, 0b10011001, 0b10100001, 0b10100001, 0b10011001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10010001, 0b10100001, 0b10100101, 0b10011001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10000001, 0b10100101, 0b10100101, 0b10011001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10001001, 0b10000101, 0b10100101, 0b10011001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10011001, 0b10000101, 0b10000101, 0b10011001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10011001, 0b10100101, 0b10000101, 0b10001001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10011001, 0b10100101, 0b10100101, 0b10000001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10011001, 0b10100101, 0b10100101, 0b10000001, 0b01000010, 0b00111100},
+        {0b00111100, 0b01000010, 0b10011001, 0b10100101, 0b10100101, 0b10010001, 0b01000010, 0b00111100}
+    };
+    uint8_t len=sizeof(pict)/sizeof(pict[0]);
     matrInit(DEV_ADDR);
-    matrDrawPict(DEV_ADDR, pict);
-    while (1);
+    while (1)
+    {
+        for (uint8_t i=0; i<len;i++)
+        {
+            matrDrawPict(DEV_ADDR, pict[i]);
+            _delay_ms(300);
+        }
+    }
 }
 
 void twiStart(void)
@@ -26,15 +43,17 @@ void twiStart(void)
     TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);
     while(!(TWCR & (1<<TWINT)));
 }
+
 void twiStop(void)
 { // состояние СТОП 
     TWCR= (1<<TWINT)|(1<<TWEN)|(1<<TWSTO);
 }
-void twiWrite(uint8_tdata)
+
+void twiWrite(uint8_t data)
 { // передача данных в матрицу
     TWDR = data;
     TWCR = (1<<TWINT)|(1<<TWEN);
-    while(!(TWCR& (1<<TWINT)));
+    while(!(TWCR & (1<<TWINT)));
 }
 //передача изображения по столбцам на матрицу с МК 
 void matrDrawPict(uint8_t devAddr, uint8_t *dataBuf)
@@ -44,12 +63,14 @@ void matrDrawPict(uint8_t devAddr, uint8_t *dataBuf)
     twiWrite((DEV_ADDR<<1)|W);
     for(i= 0; i<=7; i++)
     { // очередную часть рисунка кладём в очередной регистр 
-    twiWrite(COLUMN_DATA_REG+i);
-    twiWrite(dataBuf[i]);} // чтобы рисунок был выведен, обновляем регистр 0x0C 
+        twiWrite(COLUMN_DATA_REG+i);
+        twiWrite(dataBuf[i]);
+    } // чтобы рисунок был выведен, обновляем регистр 0x0C 
     twiWrite(UPDATE_COLUMN_REG);
     twiWrite(0xFF);
     twiStop();
 }
+
 void matrInit(uint8_t devAddr)
 {
     TWBR= 32; //200 кГц частота обмена
