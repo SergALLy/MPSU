@@ -1,46 +1,32 @@
 #include "inc/common.h"
 
-int main ()
+int main()
 {
-    uint16_t res=0;
-    uint8_t error[]={0x79, 0x50, 0x5C};
-    init_sem_ind();
-    init_rgb_led();
-    init_rangefinder();
+    uint16_t res = 0;
+    uint8_t error[] = {0x79, 0x50, 0x50, 0x5C, 0x50};
 
-    while(1)
+    init_sem_ind();     // Инициализация семисегментных индикаторов
+    init_rgb_led();     // Инициализация RGB-диода
+    init_rangefinder(); // Инициализация дальномера
+
+    while (1)
     {
-        res = listen_rangefinder()/10;
-        if (res<10 || res>100) 
+        res = listen_rangefinder() / 10; // Чтение расстояния в мм
+        if (res < 10 || res > 100)
         {
-            //  Вывод на индикаторы "Error"
-            PORTA |= (1<<1); // Открываем 1 защёлку
-            PORTC = error[0]; // Вывод на 1 индикатор букву "E"
-            _delay_ms(1); // Задержка 1мс
-            PORTA &= ~(1<<1); // Закрываеи 1 защёлку
-            PORTA |= (1<<2); 
-            PORTC = error[1]; 
-            _delay_ms(1); 
-            PORTA &= ~(1<<2); 
-            PORTA |= (1<<3); 
-            PORTC = error[1]; 
-            _delay_ms(1); 
-            PORTA &= ~(1<<3); 
-            PORTA |= (1<<4); 
-            PORTC = error[2]; 
-            _delay_ms(1); 
-            PORTA &= ~(1<<4); 
-            PORTA |= (1<<5); 
-            PORTC = error[1]; 
-            _delay_ms(1); 
-            PORTA &= ~(1<<5); 
-            
-            color_rgb_led(1023,0,0);
+            for (uint8_t i = 0; i < 5; i++) // Вывод на индикаторы "Error"
+            {
+                PORTA |= (1 << (i + 1));  // Открываем i+1 защёлку
+                PORTC = error[i];         // Вывод на i+1 индикатор i букву
+                _delay_ms(1);             // Задержка 1мс
+                PORTA &= ~(1 << (i + 1)); // Закрываеи i+1 защёлку
+            }
+            color_rgb_led(1023, 0, 0); // Красный цвет на светодиоде
         }
         else
         {
             sem_ind_show(res); // Вывод в сантиментрах
-            color_rgb_led(1023-res*10.23,1023,1023-res*10.23);
+            color_rgb_led(1023 - res * 10.23, 1023, 1023 - res * 10.23);
         }
     }
 }
