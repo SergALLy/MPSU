@@ -7,7 +7,6 @@
 #include <avr/interrupt.h>
 
 // Пользовательские библиотеки
-#include "adc.h" // Работа с АЦП
-#include "encoder.h" // Работа с энкодером
+#include "spi.h" // Работа с SPI
 
 #endif
